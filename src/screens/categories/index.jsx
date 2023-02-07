@@ -11,12 +11,6 @@ const Categories = ({ navigation }) => {
                 onPress={()=>{ navigation.navigate("Products")}}
                 color="red"
             />
-            <Button 
-                title= "Detail"
-                onPress={()=>{ navigation.navigate("ProductDetail")}}
-                color="red"
-            />
-        
         </View>
     )
 }
