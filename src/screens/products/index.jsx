@@ -1,17 +1,31 @@
 import React from "react";
 import { styles } from "./styles";
-import { View, Text, Button } from "react-native";
+import { ProductItem } from "../../components" 
+import { SafeAreaView, FlatList } from "react-native";
+import { PRODUCTS } from "../../constants/data/index"
 
-const Products = ({ navigation })=> {
+const Products = ({ navigation, route })=> {
+
+    const {categoryId} = route.params;
+    const renderItem = ({ item }) => <ProductItem item={item} onSelected={onSelected}/>;
+    const onSelected = (item) => {
+        navigation.navigate('ProductDetail', { 
+            productId: item.id,
+            title: item.title,    
+        })
+    };
+    const keyExtractor = (item) => item.id.toString();
+    const filteredProducts = PRODUCTS.filter( (prod) => prod.categoryId === categoryId) 
+
     return(
-        <View style={styles.container}>
-            <Text>Products</Text>
-            <Button 
-                title= "Detalle"
-                onPress={()=> navigation.navigate("ProductDetail")}
-                color="red"
+        <SafeAreaView style={styles.container}>
+            <FlatList 
+                style={styles.contentList}
+                data={filteredProducts}
+                renderItem={renderItem}
+                keyExtractor={keyExtractor}
             />
-        </View>
+        </SafeAreaView>
     )
 }
 
